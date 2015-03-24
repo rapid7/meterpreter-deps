@@ -9,9 +9,9 @@ update: libressl-$(LIBRESSL_VERSION).tar.gz libressl-$(LIBRESSL_VERSION)-windows
 	unzip $(LIBRESSL_WIN).zip
 	rsync -a --delete $(LIBRESSL_WIN)/include/openssl/ include/openssl/
 	cp $(LIBRESSL_WIN)/x86/libcrypto-$(LIBRESSL_CRYPTO_VER).lib lib/win/libeay32.lib
-	cp $(LIBRESSL_WIN)/x86/libcrypto-$(LIBRESSL_SSL_VER).lib lib/win/ssleay32.lib
+	cp $(LIBRESSL_WIN)/x86/libssl-$(LIBRESSL_SSL_VER).lib lib/win/ssleay32.lib
 	cp $(LIBRESSL_WIN)/x64/libcrypto-$(LIBRESSL_CRYPTO_VER).lib lib/win/x64/libeay32.lib
-	cp $(LIBRESSL_WIN)/x64/libcrypto-$(LIBRESSL_SSL_VER).lib lib/win/x64/ssleay32.lib
+	cp $(LIBRESSL_WIN)/x64/libssl-$(LIBRESSL_SSL_VER).lib lib/win/x64/ssleay32.lib
 
 libressl-$(LIBRESSL_VERSION).tar.gz:
 	wget $(LIBRESSL_MIRROR)/libressl-$(LIBRESSL_VERSION).tar.gz
