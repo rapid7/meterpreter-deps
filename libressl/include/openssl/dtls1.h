@@ -60,7 +60,9 @@
 #ifndef HEADER_DTLS1_H
 #define HEADER_DTLS1_H
 
+#ifdef _WIN32
 #include <winsock2.h>
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>

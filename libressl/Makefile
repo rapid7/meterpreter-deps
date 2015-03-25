@@ -45,10 +45,10 @@ $(build_tmp)/libressl-$(LIBRESSL_VERSION)/ssl/.libs/libssl.so:
 	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && \
 		./configure --prefix=/tmp/out --disable-asm --disable-hardening \
 			ac_cv_header_sys_sysctl_h=no \
-			--host i386-linux-gnu CFLAGS="$(OSSL_CFLAGS)" LDFLAGS="-Wl,--hash-style=sysv")
+			--host i386-linux-gnu CFLAGS="$(OSSL_CFLAGS)" LDFLAGS="-Wl,--hash-style=sysv" > build.log)
 	sed -i -e s^"libcompatnoopt_la_CFLAGS = -O0"^"libcompatnoopt_la_CFLAGS = $(OSSL_CFLAGS) -O0"^ \
 		$(build_tmp)/libressl-$(LIBRESSL_VERSION)/crypto/Makefile
-	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && $(MAKE))
+	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && $(MAKE) >> build.log)
 
 clean-ssl:
 	rm -fr $(build_tmp)/libressl-$(LIBRESSL_VERSION) \
