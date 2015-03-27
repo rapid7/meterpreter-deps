@@ -39,16 +39,16 @@ $(build_tmp)/libressl-$(LIBRESSL_VERSION)/ssl/.libs/libssl.so:
 		cp $(cwd)/deps/libressl/stddef.h \
 			$(build_tmp)/libressl-$(LIBRESSL_VERSION)/include/ && \
 		cp $(cwd)/deps/libressl/issetugid_linux.c \
-			$(build_tmp)/libressl-$(LIBRESSL_VERSION)/crypto/compat
+			$(build_tmp)/libressl-$(LIBRESSL_VERSION)/crypto/compat && \
 		cp $(cwd)/deps/libressl/getentropy_linux.c \
 			$(build_tmp)/libressl-$(LIBRESSL_VERSION)/crypto/compat
 	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && \
-		./configure --prefix=/tmp/out --disable-asm --disable-hardening \
+		./configure CFLAGS=-Os --prefix=/tmp/out --disable-asm --disable-hardening \
 			ac_cv_header_sys_sysctl_h=no \
 			--host i386-linux-gnu CFLAGS="$(OSSL_CFLAGS)" LDFLAGS="-Wl,--hash-style=sysv" > build.log)
-	sed -i -e s^"libcompatnoopt_la_CFLAGS = -O0"^"libcompatnoopt_la_CFLAGS = $(OSSL_CFLAGS) -O0"^ \
+	@sed -i -e s^"libcompatnoopt_la_CFLAGS = -O0"^"libcompatnoopt_la_CFLAGS = $(OSSL_CFLAGS) -O0"^ \
 		$(build_tmp)/libressl-$(LIBRESSL_VERSION)/crypto/Makefile
-	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && $(MAKE) >> build.log)
+	@(cd $(build_tmp)/libressl-$(LIBRESSL_VERSION) && $(MAKE) -j 4 >> build.log)
 
 clean-ssl:
 	rm -fr $(build_tmp)/libressl-$(LIBRESSL_VERSION) \
